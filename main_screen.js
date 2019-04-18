@@ -15,10 +15,11 @@ var feedButton = document.getElementById("feedButton");
 
 //var petType = prompt("which pet you want?", "Pet here");
 
-var petType = "dog";
+var petType = "cat.png";
 var maxHealth = 260;
 var maxHunger = 100;
 var maxThirst = 100;
+var dead = false;
 
 // window.addEventListener('mousemove', 
 // function(event) {
@@ -29,7 +30,8 @@ var maxThirst = 100;
 
 function Dead()
 {
-  
+  dead = true;
+  console.log("DEYAAD");
 }
 
 
@@ -57,8 +59,9 @@ function pet(petType,x,y,health){
     this.y = y;
     this.xv = 1;
     this.health  = health;
-    this.healthV = 0.08;
+    this.healthV = 0.8;
     var petImage = new Image();
+    petImage.src = "./images/" + petType;
 
     this.feed = function()
     {
@@ -76,20 +79,24 @@ function pet(petType,x,y,health){
 
     this.statUpdate = function()
     {
-      if (this.health > 93)
+      if (this.health > 10)
       {
         this.health -= this.healthV;
+      }
+      else
+      {
+        Dead();
       }
       c.beginPath();
       c.fillStyle = "red";
       c.fillRect(93,53,this.health,40);
       c.stroke();
     }
+    
 
   this.draw = function(){
     //console.log(this.x,this.y);
     c.drawImage(petImage,this.x,this.y,250,250);
-    petImage.src = "./images/" + petType + ".jpg";
     
   }
 
@@ -101,12 +108,11 @@ function pet(petType,x,y,health){
     }
     this.x += this.xv;
     //this.y++;
+    if (dead)
+    {
+      petImage.src = "images/dead.png";
+    }
     this.draw();
-  }
-
-  if (this.health < 53)
-  {
-    Dead();
   }
 
 }
