@@ -5,6 +5,8 @@ canvas.width = window.innerWidth;
 
 var c = canvas.getContext('2d');
 
+var feedButton = document.getElementById("feedButton");
+
 
 
 
@@ -14,6 +16,23 @@ var c = canvas.getContext('2d');
 //var petType = prompt("which pet you want?", "Pet here");
 
 var petType = "dog";
+var maxHealth = 260;
+var maxHunger = 100;
+var maxThirst = 100;
+
+// window.addEventListener('mousemove', 
+// function(event) {
+//   mouse.x = event.x;
+//   mouse.y = event.y;
+//   //console.log(mouse.x);
+// })
+
+function Dead()
+{
+  
+}
+
+
 
 function draw_everthing_else()
 {
@@ -29,15 +48,43 @@ function draw_everthing_else()
   {
     var healthBar = new Image();
     healthBar.src = "images/healthBar.jpg";
-    c.drawImage(healthBar,20,30,200,200);
+    c.drawImage(healthBar,20,30,340,85);
   }
 }
 
-function pet(petType,x,y){
+function pet(petType,x,y,health){
     this.x = x;
     this.y = y;
     this.xv = 1;
+    this.health  = health;
+    this.healthV = 0.08;
     var petImage = new Image();
+
+    this.feed = function()
+    {
+      if (this.health < maxHealth)
+      {
+        console.log("been fed");
+        this.health += 10;
+      }
+      else
+      {
+        console.log("Tummy is full buddy");
+      }
+
+    }
+
+    this.statUpdate = function()
+    {
+      if (this.health > 93)
+      {
+        this.health -= this.healthV;
+      }
+      c.beginPath();
+      c.fillStyle = "red";
+      c.fillRect(93,53,this.health,40);
+      c.stroke();
+    }
 
   this.draw = function(){
     //console.log(this.x,this.y);
@@ -57,16 +104,29 @@ function pet(petType,x,y){
     this.draw();
   }
 
+  if (this.health < 53)
+  {
+    Dead();
+  }
+
 }
 
-petObject = new pet(petType,(canvas.width/2),(canvas.height)-250)
+
+petObject = new pet(petType,(canvas.width/2),(canvas.height)-250,maxHealth)
 everythingElse = new draw_everthing_else();
+
+feedButton.addEventListener("click", feed);
+function feed()
+{
+  petObject.feed();
+}
 
 function animate(){
   requestAnimationFrame(animate)
   c.clearRect(0,0,innerWidth, innerHeight);
-  everythingElse.healthBarDraw();
   everythingElse.backgroundDraw();
+  everythingElse.healthBarDraw();
+  petObject.statUpdate();
   petObject.update();
 }
 
