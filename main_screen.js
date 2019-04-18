@@ -13,9 +13,9 @@ var feedButton = document.getElementById("feedButton");
 
 //var playereName = prompt("Whats your name", "Enter name here");
 
-//var petType = prompt("which pet you want?", "Pet here");
+var petType = prompt("which pet you want?", "cat/dog");
 
-var petType = "cat.png";
+//var petType = "cat.png";
 var maxHealth = 260;
 var maxHunger = 100;
 var maxThirst = 100;
@@ -59,9 +59,9 @@ function pet(petType,x,y,health){
     this.y = y;
     this.xv = 1;
     this.health  = health;
-    this.healthV = 0.8;
+    this.healthV = 0.08;
     var petImage = new Image();
-    petImage.src = "./images/" + petType;
+    petImage.src = "./images/" + petType + ".jpg";
 
     this.feed = function()
     {
