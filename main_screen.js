@@ -50,7 +50,7 @@ function draw_everthing_else()
   {
     var healthBar = new Image();
     healthBar.src = "images/healthBar.jpg";
-    c.drawImage(healthBar,20,30,340,85);
+    c.drawImage(healthBar,20,100,340,85);
   }
 }
 
